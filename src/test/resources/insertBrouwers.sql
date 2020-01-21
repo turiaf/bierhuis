@@ -1,0 +1,2 @@
+insert into brouwers (naam, straat, huisNr, postcode, gemeente, omzet) VALUES ('test', 'straatTest', '1', 1000, 'gemeenteTest', 1);
+insert into brouwers (naam, straat, huisNr, postcode, gemeente, omzet) VALUES ('test2', 'straatTest2', '2', 2000, 'gemeenteTest2', 2);
