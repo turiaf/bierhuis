@@ -3,10 +3,10 @@
 <head th:replace="fragments::head(title= 'Bieren')"></head>
 <body>
 <nav th:replace="fragments::menu"></nav>
-<h1>A gerer</h1>
+<h1 th:if="${brouwer}" th:object="${brouwer}" th:text="|*{naam} (*{gemeente})|"></h1>
 <ul>
     <li th:each="bier:${bieren}" th:object="${bier}">
-        <a th:text="*{naam}"></a>
+        <a th:href="@{/bier/{number}(number= *{id})}" th:text="*{naam}"></a>
     </li>
 </ul>
 </body>

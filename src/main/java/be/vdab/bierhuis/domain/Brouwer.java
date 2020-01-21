@@ -1,6 +1,6 @@
 package be.vdab.bierhuis.domain;
 
-public class Brouwers {
+public class Brouwer {
     private final long id;
     private final String naam;
     private final String straat;
@@ -9,7 +9,7 @@ public class Brouwers {
     private final String gemeente;
     private final long omzet;
 
-    public Brouwers(long id, String naam, String straat, String huisNr, int postcode, String gemeente, long omzet) {
+    public Brouwer(long id, String naam, String straat, String huisNr, int postcode, String gemeente, long omzet) {
         this.id = id;
         this.naam = naam;
         this.straat = straat;

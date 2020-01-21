@@ -23,9 +23,12 @@ class BrouwersController {
     public ModelAndView toonBrouwers() {
         return new ModelAndView("brouwers").addObject("brouwers", brouwerService.findAll());
     }
-    @GetMapping("brouwers/{id}")
+    @GetMapping("{id}")
     public ModelAndView toonBierenVanBrouwer(@PathVariable long id) {
-        return new ModelAndView("bieren")
-                .addObject("bieren", bierService.findByBrouwer(id));
+        ModelAndView modelAndView = new ModelAndView("bieren");
+        if(brouwerService.findById(id).isPresent()) {
+            modelAndView.addObject("brouwer", brouwerService.findById(id).get());
+        }
+        return modelAndView.addObject("bieren", bierService.findByBrouwer(id));
     }
 }

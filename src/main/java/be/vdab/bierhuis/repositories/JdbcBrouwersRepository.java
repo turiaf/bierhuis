@@ -1,12 +1,14 @@
 package be.vdab.bierhuis.repositories;
 
-import be.vdab.bierhuis.domain.Brouwers;
+import be.vdab.bierhuis.domain.Brouwer;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 class JdbcBrouwersRepository implements BrouwersRepository {
@@ -20,14 +22,24 @@ class JdbcBrouwersRepository implements BrouwersRepository {
         insert.usingGeneratedKeyColumns("id");
     }
 
-    private final RowMapper<Brouwers> brouwerMapper = (result, rowNum) ->
-        new Brouwers(result.getLong("id"), result.getString("naam"),
+    private final RowMapper<Brouwer> brouwerMapper = (result, rowNum) ->
+        new Brouwer(result.getLong("id"), result.getString("naam"),
                 result.getString("straat"), result.getString("huisNr"),
                 result.getInt("postcode"), result.getString("gemeente"),
                 result.getLong("omzet"));
     @Override
-    public List<Brouwers> findAll() {
+    public List<Brouwer> findAll() {
         String sql = "select id, naam, straat, huisNr, postcode, gemeente, omzet from brouwers order by naam";
         return template.query(sql, brouwerMapper);
+    }
+
+    @Override
+    public Optional<Brouwer> findById(long id) {
+        try {
+            String sql ="select id, naam, straat, huisNr, postcode, gemeente, omzet from brouwers where id = ?";
+            return Optional.of(template.queryForObject(sql, brouwerMapper, id));
+        } catch (IncorrectResultSizeDataAccessException ex) {
+            return Optional.empty();
+        }
     }
 }
