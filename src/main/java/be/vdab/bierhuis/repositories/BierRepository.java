@@ -10,4 +10,5 @@ public interface BierRepository {
     List<Bier> findAll();
     Optional<Bier> findById(long id);
     List<Bier> findByBrouwer(long idBrouwer);
+    void update(Bier bier);
 }

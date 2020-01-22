@@ -1,0 +1,53 @@
+package be.vdab.bierhuis.domain;
+
+import javax.validation.constraints.*;
+
+public class Bestelbon {
+    private final long id;
+    @NotBlank
+    private final String naam;
+    @NotBlank
+    private final String straat;
+    @NotBlank
+    private final String huisNr;
+    @NotNull
+    @Positive
+    @Min(1000)
+    @Max(9999)
+    private final Integer postcode;
+    @NotBlank
+    private final String gemeente;
+
+    public Bestelbon(long id, String naam, String straat, String huisNr, Integer postcode, String gemeente) {
+        this.id = id;
+        this.naam = naam;
+        this.straat = straat;
+        this.huisNr = huisNr;
+        this.postcode = postcode;
+        this.gemeente = gemeente;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public String getNaam() {
+        return naam;
+    }
+
+    public String getStraat() {
+        return straat;
+    }
+
+    public String getHuisNr() {
+        return huisNr;
+    }
+
+    public Integer getPostcode() {
+        return postcode;
+    }
+
+    public String getGemeente() {
+        return gemeente;
+    }
+}

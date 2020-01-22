@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
+@Transactional(readOnly = true, isolation = Isolation.READ_COMMITTED)
 class DefaultBrouwerService implements BrouwerService {
     private final BrouwersRepository brouwersRepository;
 

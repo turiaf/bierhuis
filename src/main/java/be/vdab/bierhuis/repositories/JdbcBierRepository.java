@@ -53,4 +53,10 @@ class JdbcBierRepository implements BierRepository {
         return template.query(sql, bierMapper, idBrouwer);
     }
 
+    @Override
+    public void update(Bier bier) {
+        String sql = "update bieren set besteld = besteld + 1 where id = ?";
+        template.update(sql, bier.getId());
+    }
+
 }

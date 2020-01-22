@@ -3,17 +3,19 @@
 <head th:replace="fragments::head(title= 'Bier')"></head>
 <body>
 <nav th:replace="fragments::menu"></nav>
-<h1 th:if="${bier.present}" th:text="${bier.get().naam}"></h1>
-<dl th:if="${bier.present}" th:object="${bier.get()}">
-    <dt>Alcohol</dt>
-    <dd th:text="${bier.get().alcohol}"></dd>
-    <dt>Prijs</dt>
-    <dd th:text="${bier.get().prijs}"></dd>
-</dl>
-<form method="post" th:action="@{/bier}">
-    <label>Aantal <input name="aantal"></label>
-    <input name="id" type="hidden" th:value="${bier.get().id}">
-    <button>Toevoegen</button>
-</form>
+<div th:if="${bier} != null" th:object="${bier}">
+    <h1 th:text="*{naam}"></h1>
+    <dl>
+        <dt>Alcohol</dt>
+        <dd th:text="*{{alcohol}}"></dd>
+        <dt>Prijs</dt>
+        <dd th:text="*{{prijs}}"></dd>
+    </dl>
+    <form th:object="${bierForm}" method="post" th:action="@{/bier}">
+        <label>Aantal <span th:errors="*{aantal}"></span><input th:field="*{aantal}"></label>
+        <input name="id" type="hidden" th:value="${bier.id}">
+        <button>Toevoegen</button>
+    </form>
+</div>
 </body>
 </html>

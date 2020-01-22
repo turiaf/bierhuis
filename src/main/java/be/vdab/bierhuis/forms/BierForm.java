@@ -1,26 +1,29 @@
 package be.vdab.bierhuis.forms;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 public class BierForm {
-    @NotBlank
+    @NotNull
     @Positive
-    private final long id;
-    @NotBlank
+    private final Long id;
+    @NotNull
     @Positive
-    private final int aantal;
+    @Min(2)
+    private final Integer aantal;
 
-    public BierForm(long id, int aantal) {
+    public BierForm(Long id, Integer aantal) {
         this.id = id;
         this.aantal = aantal;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getAantal() {
+    public Integer getAantal() {
         return aantal;
     }
 }
