@@ -1,6 +1,7 @@
 package be.vdab.bierhuis.repositories;
 
 import be.vdab.bierhuis.domain.Bier;
+import be.vdab.bierhuis.exception.BierNietGevondenException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -56,7 +57,9 @@ class JdbcBierRepository implements BierRepository {
     @Override
     public void update(Bier bier) {
         String sql = "update bieren set besteld = besteld + 1 where id = ?";
-        template.update(sql, bier.getId());
+        if(template.update(sql, bier.getId()) == 0) {
+            throw new BierNietGevondenException();
+        }
     }
 
 }

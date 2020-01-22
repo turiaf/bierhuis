@@ -38,4 +38,8 @@ public class Mandje implements Serializable {
     public BigDecimal getTotaal() {
         return totaal;
     }
+    public void delete() {
+        bieren.clear();
+        totaal = BigDecimal.ZERO;
+    }
 }

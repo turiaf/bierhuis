@@ -37,4 +37,10 @@ class DefaultBierService implements BierService {
     public List<Bier> findByBrouwer(long idBrouwer) {
         return bierRepository.findByBrouwer(idBrouwer);
     }
+
+    @Override
+    @Transactional(readOnly = false, isolation = Isolation.READ_COMMITTED)
+    public void update(Bier bier) {
+        bierRepository.update(bier);
+    }
 }

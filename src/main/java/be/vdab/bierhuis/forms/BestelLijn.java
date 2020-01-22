@@ -4,12 +4,12 @@ import be.vdab.bierhuis.domain.Bier;
 
 import java.math.BigDecimal;
 
-public class MandjeTable {
+public class BestelLijn {
     private final Bier bier;
     private final int aantal;
     private final BigDecimal teBetalen;
 
-    public MandjeTable(Bier bier, int aantal, BigDecimal teBetalen) {
+    public BestelLijn(Bier bier, int aantal, BigDecimal teBetalen) {
         this.bier = bier;
         this.aantal = aantal;
         this.teBetalen = teBetalen;

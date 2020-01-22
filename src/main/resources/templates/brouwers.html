@@ -4,7 +4,7 @@
 <body>
     <nav th:replace="fragments::menu"></nav>
     <h1>Brouwers</h1>
-    <ul class="brouwer">
+    <ul class="zebra">
         <li th:each="brouwer:${brouwers}" th:object="${brouwer}">
             <a th:href="@{/brouwers/{index}(index= *{id})}" th:text="|*{naam} (*{gemeente})|"></a></li>
     </ul>
