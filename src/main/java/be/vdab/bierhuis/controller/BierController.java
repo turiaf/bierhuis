@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -33,16 +34,13 @@ class BierController {
     @GetMapping("{id}")
     public ModelAndView toonBier(@PathVariable long id) {
         ModelAndView modelAndView = new ModelAndView("bier");
-//        Optional<Bier> bier = bierService.findById(id);
-//        if(bier.isPresent()) {
-//            modelAndView.addObject("bier", bier.get());
-//        }
         bierService.findById(id).ifPresent(bier -> {
             modelAndView.addObject("bier", bier);
         });
         modelAndView.addObject("bierForm", new BierForm(null, null));
         return modelAndView;
     }
+
 
     @PostMapping
     public ModelAndView toevoegen(@Valid BierForm bierForm, Errors errors) {
