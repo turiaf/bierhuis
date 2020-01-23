@@ -4,6 +4,7 @@
 <body>
 <script th:src="@{/js/preventDoubleSubmit.js}" defer></script>
 <nav th:replace="fragments::menu"></nav>
+<h1 th:if="${bier} == null">Bier niet gevonden</h1>
 <div th:if="${bier} != null" th:object="${bier}">
     <h1 th:text="*{naam}"></h1>
     <dl>
@@ -18,5 +19,6 @@
         <button>Toevoegen</button>
     </form>
 </div>
+
 </body>
 </html>

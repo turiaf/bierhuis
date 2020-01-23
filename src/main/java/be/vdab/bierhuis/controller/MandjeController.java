@@ -6,6 +6,7 @@ import be.vdab.bierhuis.services.BestelBonService;
 import be.vdab.bierhuis.services.BestelbonlijnService;
 import be.vdab.bierhuis.services.BierService;
 import be.vdab.bierhuis.sessions.Mandje;
+import be.vdab.bierhuis.sessions.StateMandje;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,11 +25,13 @@ public class MandjeController {
     private final Mandje mandje;
     private final BierService bierService;
     private final BestelbonlijnService bestelbonlijnService;
+    private final StateMandje stateMandje;
 
-    public MandjeController(Mandje mandje, BierService bierService, BestelbonlijnService bestelbonlijnService) {
+    public MandjeController(Mandje mandje, BierService bierService, BestelbonlijnService bestelbonlijnService, StateMandje stateMandje) {
         this.mandje = mandje;
         this.bierService = bierService;
         this.bestelbonlijnService = bestelbonlijnService;
+        this.stateMandje = stateMandje;
     }
 
     //     private BigDecimal totaal = BigDecimal.ZERO;
@@ -57,6 +60,7 @@ public class MandjeController {
 //        ModelAndView modelAndView = new ModelAndView("bevestigd");
         long idBon = bestelbonlijnService.bestelbonBevestigen(mandje.getBieren(), bestelbon);
         mandje.delete();
+        stateMandje.setGevuld(false);
 //        modelAndView.addObject("bestelBon", idBon);
         redirect.addAttribute("toegevoegd", idBon);
         return new ModelAndView("redirect:/mandje/bestelBon");

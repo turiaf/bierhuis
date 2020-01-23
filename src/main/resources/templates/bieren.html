@@ -3,7 +3,8 @@
 <head th:replace="fragments::head(title= 'Bieren')"></head>
 <body>
 <nav th:replace="fragments::menu"></nav>
-<h1 th:if="${brouwer}" th:object="${brouwer}" th:text="|*{naam} (*{gemeente})|"></h1>
+<h1 th:if="${brouwer == null}">Brouwer niet gevonden</h1>
+<h1 th:if="${brouwer} != null" th:object="${brouwer}" th:text="|*{naam} (*{gemeente})|"></h1>
 <ul class="zebra">
     <li th:each="bier:${bieren}" th:object="${bier}">
         <a th:href="@{/bier/{number}(number= *{id})}" th:text="*{naam}"></a>

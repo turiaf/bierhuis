@@ -1,7 +1,7 @@
 package be.vdab.bierhuis.repositories;
 
 import be.vdab.bierhuis.domain.Bier;
-import be.vdab.bierhuis.exception.BierNietGevondenException;
+import be.vdab.bierhuis.exceptions.BierNietGevondenException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
