@@ -2,12 +2,15 @@ package be.vdab.bierhuis.repositories;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import be.vdab.bierhuis.domain.Bier;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.jdbc.JdbcTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
+
+import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -58,5 +61,12 @@ class JdbcBierRepositoryTest extends AbstractTransactionalJUnit4SpringContextTes
                 .hasSize(super.countRowsInTableWhere(BIEREN, "brouwerid= 1"))
                 .extracting(bier -> bier.getNaam())
                 .isSortedAccordingTo((o1, o2) -> o1.compareToIgnoreCase(o2));
+    }
+    @Test
+    void update() {
+        long id = idVanTestBier();
+        Bier bier = new Bier(id, "test4", 1, 1, BigDecimal.ONE, BigDecimal.TEN, 0);
+        repository.update(bier);
+        assertThat(super.jdbcTemplate.queryForObject("select besteld from bieren where id= ?", Long.class, id)).isOne();
     }
 }

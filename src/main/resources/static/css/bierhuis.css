@@ -44,7 +44,6 @@ input:focus, textarea:focus{
 }
 
 nav ul {
-    /*background-color: gray;*/
     padding: 0.4em 0;
 }
 
@@ -53,14 +52,11 @@ nav li {
 }
 
 nav li a {
-    /*color: white;*/
     font-weight: bold;
     padding-left: 0.5em;
-    /*text-decoration: none;*/
     vertical-align: middle;
 }
 nav li a:hover {
-    /*color: #F7FFCC;*/
     color: red;
 }
 

@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping("brouwers")
@@ -23,25 +22,11 @@ class BrouwersController {
     public ModelAndView toonBrouwers() {
         return new ModelAndView("brouwers").addObject("brouwers", brouwerService.findAll());
     }
-    /*@GetMapping("{id}")
-    public ModelAndView toonBierenVanBrouwer(@PathVariable long id) {
-        ModelAndView modelAndView = new ModelAndView("bieren");
-//        if(brouwerService.findById(id).isPresent()) {
-//            modelAndView.addObject("brouwer", brouwerService.findById(id).get());
-//        }
-        brouwerService.findById(id).ifPresent(brouwer -> {
-            modelAndView.addObject("brouwer", brouwer);
-        });
-        return modelAndView.addObject("bieren", bierService.findByBrouwer(id));
-    }*/
     @GetMapping("{id}")
     public ModelAndView toonBierenVanBrouwer(@PathVariable("id") String idString) {
         try {
             long id = Long.parseLong(idString);
             ModelAndView modelAndView = new ModelAndView("bieren");
-//        if(brouwerService.findById(id).isPresent()) {
-//            modelAndView.addObject("brouwer", brouwerService.findById(id).get());
-//        }
             brouwerService.findById(id).ifPresent(brouwer -> {
                 modelAndView.addObject("brouwer", brouwer);
             });

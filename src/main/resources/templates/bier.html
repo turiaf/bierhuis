@@ -9,7 +9,7 @@
     <h1 th:text="*{naam}"></h1>
     <dl>
         <dt>Alcohol</dt>
-        <dd th:text="*{{alcohol}}"></dd>
+        <dd th:text="|*{alcohol} %|"></dd>
         <dt>Prijs</dt>
         <dd th:text="*{{prijs}}"></dd>
     </dl>

@@ -9,9 +9,8 @@ public class Bier {
     private final String naam;
     private final long brouwerId;
     private final long soortId;
-//    @NumberFormat(style = NumberFormat.Style.PERCENT)
     private final BigDecimal alcohol;
-//    @NumberFormat(style = NumberFormat.Style.CURRENCY)
+    @NumberFormat(style = NumberFormat.Style.CURRENCY)
     private final BigDecimal prijs;
     private final long bestelId;
 

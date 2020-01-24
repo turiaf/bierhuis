@@ -12,6 +12,7 @@ class MyControllerAdvice {
     MyControllerAdvice(StateMandje stateMandje) {
         this.stateMandje = stateMandje;
     }
+
     @ModelAttribute
     void  extraDataToevoegenAanModel(Model model) {
         model.addAttribute(stateMandje);

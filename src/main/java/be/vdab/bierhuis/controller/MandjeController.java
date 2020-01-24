@@ -34,9 +34,26 @@ public class MandjeController {
         this.stateMandje = stateMandje;
     }
 
-    //     private BigDecimal totaal = BigDecimal.ZERO;
     @GetMapping
     public ModelAndView toonMandje() {
+        ModelAndView modelAndView = maakMandje();
+        modelAndView.addObject(new Bestelbon(0, null, null, null, null, null));
+        return modelAndView;
+    }
+    @PostMapping("bevestigen")
+    public ModelAndView bevestigen(@Valid Bestelbon bestelbon, Errors errors, RedirectAttributes redirect) {
+        if(errors.hasErrors()) {
+            ModelAndView modelAndView = maakMandje();
+            return modelAndView;
+        }
+        long idBon = bestelbonlijnService.bestelbonBevestigen(mandje.getBieren(), bestelbon);
+        mandje.delete();
+        stateMandje.setGevuld(false);
+        redirect.addAttribute("toegevoegd", idBon);
+        return new ModelAndView("redirect:/mandje/bestelBon");
+    }
+
+    private ModelAndView maakMandje() {
         ModelAndView modelAndView = new ModelAndView("mandje");
         if (mandje.isGevuld()) {
             List<BestelLijn> mandjeList = new ArrayList<>();
@@ -48,23 +65,10 @@ public class MandjeController {
             });
             modelAndView.addObject("mandje", mandjeList);
         }
-        modelAndView.addObject("totaal", mandje.getTotaal())
-        .addObject(new Bestelbon(0, null, null, null, null, null));
+        modelAndView.addObject("totaal", mandje.getTotaal());
         return modelAndView;
     }
-    @PostMapping("bevestigen")
-    public ModelAndView bevestigen(@Valid Bestelbon bestelbon, Errors errors, RedirectAttributes redirect) {
-        if(errors.hasErrors()) {
-            return new ModelAndView("mandje");
-        }
-//        ModelAndView modelAndView = new ModelAndView("bevestigd");
-        long idBon = bestelbonlijnService.bestelbonBevestigen(mandje.getBieren(), bestelbon);
-        mandje.delete();
-        stateMandje.setGevuld(false);
-//        modelAndView.addObject("bestelBon", idBon);
-        redirect.addAttribute("toegevoegd", idBon);
-        return new ModelAndView("redirect:/mandje/bestelBon");
-    }
+
     @GetMapping("bestelBon")
     public ModelAndView toonBevestigen() {
         return new ModelAndView("bestelBon");

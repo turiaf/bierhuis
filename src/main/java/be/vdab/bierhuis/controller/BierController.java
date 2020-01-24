@@ -1,22 +1,15 @@
 package be.vdab.bierhuis.controller;
 
-import be.vdab.bierhuis.domain.Bier;
 import be.vdab.bierhuis.forms.BierForm;
 import be.vdab.bierhuis.services.BierService;
 import be.vdab.bierhuis.sessions.Mandje;
 import be.vdab.bierhuis.sessions.StateMandje;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("bier")
@@ -43,22 +36,23 @@ class BierController {
 
 
     @PostMapping
-    public ModelAndView toevoegen(@Valid BierForm bierForm, Errors errors) {
+    public ModelAndView toevoegen(@Valid BierForm bierForm, Errors errors, @RequestParam("id") String idN) {
         if(errors.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("bier");
-            if(bierForm != null && bierForm.getId() != null) {
-                bierService.findById(bierForm.getId()).ifPresent(bier -> {
+            try {
+                long id = Long.parseLong(idN);
+                bierService.findById(id).ifPresent(bier -> {
                     modelAndView.addObject("bier", bier);
                 });
+            } catch (NumberFormatException ex) {
+                return new ModelAndView("fout");
             }
             return modelAndView;
         }
         bierService.findById(bierForm.getId()).ifPresent(bier -> {
             mandje.add(bierForm.getId(), bierForm.getAantal());
             mandje.addTotaal(bier.teBetalen(bierForm.getAantal()));
-            if(mandje.isGevuld()) {
-                stateMandje.setGevuld(true);
-            }
+            stateMandje.setGevuld(true);
         });
         return new ModelAndView("redirect:/mandje");
     }
