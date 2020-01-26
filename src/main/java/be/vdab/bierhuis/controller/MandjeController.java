@@ -46,11 +46,16 @@ public class MandjeController {
             ModelAndView modelAndView = maakMandje();
             return modelAndView;
         }
-        long idBon = bestelbonlijnService.bestelbonBevestigen(mandje.getBieren(), bestelbon);
-        mandje.delete();
-        stateMandje.setGevuld(false);
-        redirect.addAttribute("toegevoegd", idBon);
-        return new ModelAndView("redirect:/mandje/bestelBon");
+        if(mandje.isGevuld()) {
+            long idBon = bestelbonlijnService.bestelbonBevestigen(mandje.getBieren(), bestelbon);
+            mandje.delete();
+            stateMandje.setGevuld(false);
+            redirect.addAttribute("toegevoegd", idBon);
+            return new ModelAndView("redirect:/mandje/bestelBon");
+        } else {
+            ModelAndView modelAndView = maakMandje();
+            return modelAndView;
+        }
     }
 
     private ModelAndView maakMandje() {
